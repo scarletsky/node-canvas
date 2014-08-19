@@ -3,7 +3,8 @@
     ['OS=="win"', {
       'variables': {
         'GTK_Root%': 'C:/GTK', # Set the location of GTK all-in-one bundle
-        'with_jpeg%': 'false',
+        'libjpeg_root%': 'C:/libjpeg-turbo',
+        'with_jpeg%': '<!("./util/exists.bat" C:/libjpeg-turbo)',
         'with_gif%': 'false',
         'with_pango%': 'false',
         'with_freetype%': 'false'
@@ -141,7 +142,10 @@
           'conditions': [
             ['OS=="win"', {
               'libraries': [
-                '-l<(GTK_Root)/lib/jpeg.lib'
+                '-l<(libjpeg_root)/lib/jpeg-static.lib'
+              ],
+              'include_dirs': [
+                '<(libjpeg_root)/include'
               ]
             }, {
               'libraries': [
