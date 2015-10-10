@@ -6,12 +6,12 @@
         'with_gif%': 'false',
         'with_pango%': 'false',
         'with_freetype%': 'false',
-        'variables': { # Nest libjpeg_root to evaluate it before with_jpeg
-          'libjpeg_root%': '<!(node ./util/win_jpeg_lookup)'
+        'variables': { # Nest jpeg_root to evaluate it before with_jpeg
+          'jpeg_root%': '<!(node ./util/win_jpeg_lookup)'
         },
-        'libjpeg_root%': '<(libjpeg_root)', # Take value of nested variable
+        'jpeg_root%': '<(jpeg_root)', # Take value of nested variable
         'conditions': [
-          ['libjpeg_root==""', {
+          ['jpeg_root==""', {
             'with_jpeg%': 'false'
           }, {
             'with_jpeg%': 'true'
@@ -151,10 +151,10 @@
           'conditions': [
             ['OS=="win"', {
               'libraries': [
-                '-l<(libjpeg_root)/lib/jpeg-static.lib'
+                '-l<(jpeg_root)/lib/jpeg-static.lib'
               ],
               'include_dirs': [
-                '<(libjpeg_root)/include'
+                '<(jpeg_root)/include'
               ]
             }, {
               'libraries': [
