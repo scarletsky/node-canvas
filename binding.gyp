@@ -3,11 +3,20 @@
     ['OS=="win"', {
       'variables': {
         'GTK_Root%': 'C:/GTK', # Set the location of GTK all-in-one bundle
-        'libjpeg_root%': 'C:/libjpeg-turbo',
-        'with_jpeg%': '<!("./util/exists.bat" C:/libjpeg-turbo)',
         'with_gif%': 'false',
         'with_pango%': 'false',
-        'with_freetype%': 'false'
+        'with_freetype%': 'false',
+        'variables': { # Nest libjpeg_root to evaluate it before with_jpeg
+          'libjpeg_root%': '<!(node ./util/win_jpeg_lookup)'
+        },
+        'libjpeg_root%': '<(libjpeg_root)', # Take value of nested variable
+        'conditions': [
+          ['libjpeg_root==""', {
+            'with_jpeg%': 'false'
+          }, {
+            'with_jpeg%': 'true'
+          }]
+        ]
       }
     }, { # 'OS!="win"'
       'variables': {
